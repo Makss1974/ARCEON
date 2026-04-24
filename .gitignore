@@ -14,3 +14,4 @@ __pycache__/
 
 # Системні файли
 .DS_Store
+archiv/
