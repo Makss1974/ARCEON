@@ -26,7 +26,31 @@ Our economy consists of 5 specialized entities. Each agent has its own logic, go
 * **Real-time Monitoring:** Transparent terminal-based logging of every economic action.
 
 ---
+3. Configuration
+Create a .env file in the root directory (use .env.example as a template):
 
+Plaintext
+CIRCLE_API_KEY=your_test_api_key
+CIRCLE_ENTITY_SECRET=your_entity_secret
+4. Launch the Economy
+Start the main coordination hub:
+
+Bash
+python3 main.py
+📈 Technical Architecture
+The system uses a Bridge-Manager-Agent architecture:
+
+ArcBridge: Handles the low-level interaction with Circle SDK and Arc Network.
+
+SovereignManager: Orchestrates the market cycles.
+
+SpecializedAgents: Inherit from BaseAgent and implement unique market behaviors.
+
+🛡 Security Note
+All sensitive keys are managed via environment variables. The .env file is excluded from version control to prevent unauthorized use of funds.
+
+👥 Human Team
+Maks — System Architect & Backend Leader
 ## 🚀 How to Run (For Judges)
 
 ### 1. Prerequisites
@@ -39,3 +63,5 @@ Clone the repository and install dependencies:
 git clone [https://github.com/Makss1974/ARCEON.git](https://github.com/Makss1974/ARCEON.git)
 cd ARCEON
 pip install -r requirements.txt
+
+
