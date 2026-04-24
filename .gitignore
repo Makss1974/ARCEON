@@ -1,0 +1,16 @@
+# Секретні ключі та конфігурації
+.env
+*key.env
+kucoin_key.env
+
+# Python кеш
+__pycache__/
+*.py[cod]
+*.class
+
+# Логи (щоб не засмічувати репозиторій)
+*.log
+/home/ubuntu/IT-PROJECTS/ARCEON/logs/
+
+# Системні файли
+.DS_Store
