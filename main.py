@@ -1,21 +1,33 @@
 import time
 import random
+import os
+from dotenv import load_dotenv  # Додано для роботи з .env
 from arc_bridge import ArcBridge
 from sain_manager_v2 import SovereignManager
 from specialized_agents import EnergyDealer, StorageDealer, ComputeNode, DataBroker
+
+# Завантажуємо змінні середовища з файлу .env
+load_dotenv()
 
 GREEN, YELLOW, RED, BLUE, RESET = "\033[92m", "\033[93m", "\033[91m", "\033[94m", "\033[0m"
 
 def main():
     print(f"{BLUE}="*60)
-    print("🚀 MAITS CORE: AUTONOMOUS AGENT ECONOMY INITIALIZATION (ARC)")
+    print("🚀 ARCEON CORE: AUTONOMOUS AGENT ECONOMY INITIALIZATION (ARC)")
     print("MANIFESTO: I purchase my resources, therefore I exist.")
     print("="*60 + f"{RESET}\n")
 
-    # API KEYS FOR CIRCLE
+    # Безпечне отримання ключів через змінні середовища
+    api_key = os.getenv("CIRCLE_API_KEY")
+    entity_secret = os.getenv("CIRCLE_ENTITY_SECRET")
+
+    if not api_key or not entity_secret:
+        print(f"{RED}❌ Error: API keys not found in .env file!{RESET}")
+        return
+
     bridge = ArcBridge(
-        api_key="TEST_API_KEY:6e20e2cf72fad038e6c606dde6b8ab03:1b380273c64d8749fc2dc37502a1a5f4", 
-        entity_secret="fd023488f9a32dd41729c130d34fd51d851b41ac06b24ba50635a575f94ed5dc"
+        api_key=api_key, 
+        entity_secret=entity_secret
     )
 
     neighbors = {
@@ -32,15 +44,16 @@ def main():
         neighbors=neighbors
     )
 
-    # Ініціалізуємо розумних агентів!
+    # Ініціалізуємо розумних агентів
+    # Використовуємо імена наших віртуальних напарників для колориту!
     baryga = EnergyDealer("Solar-Baryga", "Energy Dealer", "c3cded8a-409c-5680-bc17-d82665315591", neighbors["solar_bot"], bridge)
-    prof = ComputeNode("Professor", "Compute Node", "34aab256-96e2-53db-b51c-c36e8f562d7b", neighbors["prof_bot"], bridge)
-    paparazzi = DataBroker("Paparazzi", "Data Broker", "4160f877-a9bb-53fa-9921-a5389144d3a4", neighbors["data_bot"], bridge)
-    junkie = StorageDealer("Junkie", "Storage Dealer", "479aa4ec-1287-5de0-950a-af384cd67565", neighbors["store_bot"], bridge)
+    prof = ComputeNode("Professor-Mark", "Compute Node", "34aab256-96e2-53db-b51c-c36e8f562d7b", neighbors["prof_bot"], bridge)
+    paparazzi = DataBroker("Svitlana-Data", "Data Broker", "4160f877-a9bb-53fa-9921-a5389144d3a4", neighbors["data_bot"], bridge)
+    junkie = StorageDealer("Serhii-Junkie", "Storage Dealer", "479aa4ec-1287-5de0-950a-af384cd67565", neighbors["store_bot"], bridge)
 
     try:
         while True:
-            # 1. Агенти аналізують свої ресурси і виставляють ціни (Market Updates)
+            # 1. Агенти аналізують свої ресурси і виставляють ціни
             print(f"\n{BLUE}--- NETWORK BROADCASTS ---{RESET}")
             baryga.market_update()
             junkie.market_update()
@@ -51,7 +64,7 @@ def main():
             # 2. Завгосп аналізує свої потреби і купує, якщо треба
             manager.execute_market_cycle()
 
-            # 3. Випадкові крос-агентні контракти
+            # 3. Випадкові крос-агентні контракти (B2B)
             chance = random.randint(1, 10)
             if chance > 8:
                 print(f"\n{YELLOW}⚡ [MARKET EVENT] B2B Contract Initiated!{RESET}")
